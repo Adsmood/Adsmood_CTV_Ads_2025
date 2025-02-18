@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Rnd from 'react-rnd';
-import './InteractiveElement.css';
+import '../styles/InteractiveElement.css';
 import { EditorContext } from '../context/EditorContext';
 
 const snapGrid = 10;

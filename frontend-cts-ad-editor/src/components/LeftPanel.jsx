@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './LeftPanel.css';
+import '../styles/LeftPanel.css';
 import { useDrag } from 'react-dnd';
 import ModalUploadAsset from './ModalUploadAsset';
 

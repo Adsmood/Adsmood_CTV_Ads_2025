@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import './Timeline.css';
+import '../styles/Timeline.css';
 import { EditorContext } from '../context/EditorContext';
 
 const Timeline = () => {

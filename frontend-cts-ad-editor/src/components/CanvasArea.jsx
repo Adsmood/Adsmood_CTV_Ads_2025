@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import { useDrop } from 'react-dnd';
-import './CanvasArea.css';
+import '../styles/CanvasArea.css';
 import { EditorContext } from '../context/EditorContext';
 
 // Importando todos los componentes interactivos
