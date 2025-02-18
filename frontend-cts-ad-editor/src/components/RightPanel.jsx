@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import './RightPanel.css';
+import '../styles/RightPanel.css';
 import { EditorContext } from '../context/EditorContext';
 
 const RightPanel = () => {
