@@ -1,0 +1,22 @@
+.canvas-area {
+  flex: 1;
+  background: #f0f0f0;
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.canvas {
+  width: 1920px;
+  height: 1080px;
+  background: #fff;
+  position: relative;
+  transform-origin: top left;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.canvas > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+} 

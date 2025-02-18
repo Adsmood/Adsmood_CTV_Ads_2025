@@ -1,0 +1,48 @@
+.right-panel {
+  width: 220px;
+  background-color: #2c2c2c;
+  color: #fff;
+  border-left: 1px solid #1a1a1a;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.right-panel h4 {
+  margin: 0 0 10px;
+}
+
+.prop-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.prop-row label {
+  width: 60px;
+  font-size: 13px;
+}
+
+.prop-row input {
+  flex: 1;
+  padding: 4px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  background-color: #3c3c3c;
+  color: #fff;
+}
+
+.right-panel button {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  background-color: #4e2aad;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.right-panel button:hover {
+  background-color: #6037d1;
+} 
