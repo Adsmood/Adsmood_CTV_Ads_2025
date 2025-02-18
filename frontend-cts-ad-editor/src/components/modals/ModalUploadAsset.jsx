@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import '../styles/ModalUploadAsset.css';
-import { EditorContext } from '../context/EditorContext';
+import '../../styles/ModalUploadAsset.css';
+import { EditorContext } from '../../context/EditorContext';
 
 const ModalUploadAsset = ({ onClose }) => {
   const { addLayer, setLayerAssetUrl } = useContext(EditorContext);

@@ -1,55 +1,81 @@
 import React, { useState } from 'react';
 import '../styles/LeftPanel.css';
 import { useDrag } from 'react-dnd';
-import ModalUploadAsset from './ModalUploadAsset';
+import ModalUploadAsset from './modals/ModalUploadAsset';
+import ModalUploadVideo from './modals/ModalUploadVideo';
+
+const components = [
+  { type: 'image', label: 'Image' },
+  { type: 'invideo', label: 'InVideo' },
+  { type: 'expandablevideo', label: 'ExpandableVideo' },
+  { type: 'gallery', label: 'Gallery' },
+  { type: 'maxselector', label: 'MaxSelector' },
+  { type: 'carousel', label: 'Carousel' },
+  { type: 'trivia', label: 'Trivia' },
+  { type: 'poll', label: 'Poll' }
+];
 
 const LeftPanel = () => {
-  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [selectedVideoType, setSelectedVideoType] = useState(null);
 
-  const componentsList = [
-    { type: 'background', label: 'Background' },
-    { type: 'button', label: 'Button' },
-    { type: 'qr', label: 'QR Scan' },
-    { type: 'invideo', label: 'InVideo' },
-    { type: 'gallery', label: 'Gallery' },
-    { type: 'image', label: 'Image' },
-    { type: 'maxselector', label: 'Max Selector' },
-    { type: 'expandablevideo', label: 'Expandable Video' },
-    { type: 'carousel', label: 'Interactive Carousel' },
-    { type: 'trivia', label: 'Interactive Trivia' },
-    { type: 'poll', label: 'Interactive Poll' }
-  ];
+  const handleComponentClick = (type) => {
+    switch (type) {
+      case 'image':
+        setShowImageModal(true);
+        break;
+      case 'invideo':
+      case 'expandablevideo':
+        setSelectedVideoType(type);
+        setShowVideoModal(true);
+        break;
+      default:
+        break;
+    }
+  };
 
-  const handleImageClick = () => setShowUploadModal(true);
-
-  const DraggableItem = ({ type, label }) => {
-    const [{ isDragging }, dragRef] = useDrag(() => ({
+  const renderComponent = (comp) => {
+    const [{ isDragging }, drag] = useDrag({
       type: 'COMPONENT',
-      item: { type },
-      collect: monitor => ({ isDragging: monitor.isDragging() })
-    }));
+      item: { type: comp.type },
+      collect: monitor => ({
+        isDragging: !!monitor.isDragging(),
+      }),
+    });
+
     return (
-      <div ref={dragRef} className="draggable-item" style={{ opacity: isDragging ? 0.5 : 1 }}>
-        {label}
+      <div
+        key={comp.type}
+        ref={drag}
+        className={`draggable-item ${isDragging ? 'dragging' : ''}`}
+        onClick={() => handleComponentClick(comp.type)}
+      >
+        {comp.label}
       </div>
     );
   };
 
   return (
     <div className="left-panel">
-      <h4>Componentes</h4>
+      <h3>Componentes</h3>
       <div className="components-list">
-        {componentsList.map(comp =>
-          comp.type === 'image' ? (
-            <div key={comp.type} className="draggable-item" onClick={handleImageClick}>
-              {comp.label}
-            </div>
-          ) : (
-            <DraggableItem key={comp.type} type={comp.type} label={comp.label} />
-          )
-        )}
+        {components.map(comp => renderComponent(comp))}
       </div>
-      {showUploadModal && <ModalUploadAsset onClose={() => setShowUploadModal(false)} />}
+
+      {showImageModal && (
+        <ModalUploadAsset onClose={() => setShowImageModal(false)} />
+      )}
+      
+      {showVideoModal && (
+        <ModalUploadVideo 
+          onClose={() => {
+            setShowVideoModal(false);
+            setSelectedVideoType(null);
+          }}
+          type={selectedVideoType}
+        />
+      )}
     </div>
   );
 };
