@@ -7,14 +7,19 @@ import { Project } from './project.entity';
 export class ProjectService {
   constructor(
     @InjectRepository(Project)
-    private readonly projectRepo: Repository<Project>
+    private projectRepository: Repository<Project>
   ) {}
 
-  async saveProject(data: any) {
-    const project = new Project();
-    project.data = JSON.stringify(data);
-    project.createdAt = new Date().toISOString();
-    const saved = await this.projectRepo.save(project);
-    return saved.id;
+  async create(data: any): Promise<Project> {
+    const project = this.projectRepository.create({ data });
+    return await this.projectRepository.save(project);
+  }
+
+  async findAll(): Promise<Project[]> {
+    return await this.projectRepository.find();
+  }
+
+  async findOne(id: number): Promise<Project> {
+    return await this.projectRepository.findOne({ where: { id } });
   }
 } 
