@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import '../styles/LeftPanel.css';
 import { useDrag } from 'react-dnd';
+import '../styles/LeftPanel.css';
 import ModalUploadAsset from './modals/ModalUploadAsset';
 import ModalUploadVideo from './modals/ModalUploadVideo';
 
@@ -14,6 +14,27 @@ const components = [
   { type: 'trivia', label: 'Trivia' },
   { type: 'poll', label: 'Poll' }
 ];
+
+// Componente separado para el elemento arrastrable
+function DraggableItem({ type, label, onClick }) {
+  const [{ isDragging }, drag] = useDrag({
+    type: 'COMPONENT',
+    item: { type },
+    collect: monitor => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  });
+
+  return (
+    <div
+      ref={drag}
+      className={`draggable-item ${isDragging ? 'dragging' : ''}`}
+      onClick={onClick}
+    >
+      {label}
+    </div>
+  );
+}
 
 const LeftPanel = () => {
   const [showImageModal, setShowImageModal] = useState(false);
@@ -35,32 +56,18 @@ const LeftPanel = () => {
     }
   };
 
-  const renderComponent = (comp) => {
-    const [{ isDragging }, drag] = useDrag({
-      type: 'COMPONENT',
-      item: { type: comp.type },
-      collect: monitor => ({
-        isDragging: !!monitor.isDragging(),
-      }),
-    });
-
-    return (
-      <div
-        key={comp.type}
-        ref={drag}
-        className={`draggable-item ${isDragging ? 'dragging' : ''}`}
-        onClick={() => handleComponentClick(comp.type)}
-      >
-        {comp.label}
-      </div>
-    );
-  };
-
   return (
     <div className="left-panel">
       <h3>Componentes</h3>
       <div className="components-list">
-        {components.map(comp => renderComponent(comp))}
+        {components.map(comp => (
+          <DraggableItem
+            key={comp.type}
+            type={comp.type}
+            label={comp.label}
+            onClick={() => handleComponentClick(comp.type)}
+          />
+        ))}
       </div>
 
       {showImageModal && (
