@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import Rnd from 'react-rnd';
+import { Rnd } from 'react-rnd';
 import '../styles/InteractiveElement.css';
 import { EditorContext } from '../context/EditorContext';
 
